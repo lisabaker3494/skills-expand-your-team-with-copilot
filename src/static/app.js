@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const activityInput = document.getElementById("activity");
   const closeRegistrationModal = document.querySelector(".close-modal");
+  const themeToggle = document.getElementById("theme-toggle");
+  const themeIcon = themeToggle.querySelector(".theme-icon");
+  const themeLabel = themeToggle.querySelector(".theme-label");
 
   // Search and filter elements
   const searchInput = document.getElementById("activity-search");
@@ -43,6 +46,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Authentication state
   let currentUser = null;
+
+  function setTheme(theme) {
+    const isDarkMode = theme === "dark";
+
+    document.body.classList.toggle("dark-mode", isDarkMode);
+    themeToggle.setAttribute("aria-pressed", isDarkMode ? "true" : "false");
+    themeIcon.textContent = isDarkMode ? "☀️" : "🌙";
+    themeLabel.textContent = isDarkMode ? "Light Mode" : "Dark Mode";
+    localStorage.setItem("themePreference", theme);
+  }
+
+  function initializeTheme() {
+    const savedTheme = localStorage.getItem("themePreference");
+
+    if (savedTheme === "dark" || savedTheme === "light") {
+      setTheme(savedTheme);
+      return;
+    }
+
+    const prefersDarkMode = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setTheme(prefersDarkMode ? "dark" : "light");
+  }
 
   // Time range mappings for the dropdown
   const timeRanges = {
@@ -235,6 +262,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Event listeners for authentication
+  themeToggle.addEventListener("click", () => {
+    const nextTheme = document.body.classList.contains("dark-mode")
+      ? "light"
+      : "dark";
+    setTheme(nextTheme);
+  });
+
   loginButton.addEventListener("click", openLoginModal);
   logoutButton.addEventListener("click", logout);
   closeLoginModal.addEventListener("click", closeLoginModalHandler);
@@ -862,6 +896,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Initialize app
+  initializeTheme();
   checkAuthentication();
   initializeFilters();
   fetchActivities();
