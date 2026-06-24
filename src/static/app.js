@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize filters from active elements
   function initializeFilters() {
-    // Initialize day filter
+    // Initialize difficulty filter
     const activeDifficultyFilter = document.querySelector(
       ".difficulty-filter.active"
     );
