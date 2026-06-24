@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("theme-toggle");
   const themeIcon = themeToggle?.querySelector(".theme-icon");
   const themeLabel = themeToggle?.querySelector(".theme-label");
+  const systemThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
 
   // Search and filter elements
   const searchInput = document.getElementById("activity-search");
@@ -49,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const THEME_DARK = "dark";
   const THEME_LIGHT = "light";
 
-  function setTheme(theme) {
+  function setTheme(theme, persistPreference = false) {
     if (!themeToggle || !themeIcon || !themeLabel) {
       return;
     }
@@ -60,7 +61,14 @@ document.addEventListener("DOMContentLoaded", () => {
     themeToggle.setAttribute("aria-pressed", isDarkMode ? "true" : "false");
     themeIcon.textContent = isDarkMode ? "☀️" : "🌙";
     themeLabel.textContent = isDarkMode ? "Light Mode" : "Dark Mode";
-    localStorage.setItem("themePreference", theme);
+    themeToggle.setAttribute(
+      "aria-label",
+      isDarkMode ? "Switch to light mode" : "Switch to dark mode"
+    );
+
+    if (persistPreference) {
+      localStorage.setItem("themePreference", theme);
+    }
   }
 
   function initializeTheme() {
@@ -71,10 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const prefersDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    setTheme(prefersDarkMode ? THEME_DARK : THEME_LIGHT);
+    setTheme(systemThemePreference.matches ? THEME_DARK : THEME_LIGHT);
   }
 
   // Time range mappings for the dropdown
@@ -273,9 +278,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const nextTheme = document.body.classList.contains("dark-mode")
         ? THEME_LIGHT
         : THEME_DARK;
-      setTheme(nextTheme);
+      setTheme(nextTheme, true);
     });
   }
+
+  systemThemePreference.addEventListener("change", (event) => {
+    const savedTheme = localStorage.getItem("themePreference");
+
+    if (savedTheme === THEME_DARK || savedTheme === THEME_LIGHT) {
+      return;
+    }
+
+    setTheme(event.matches ? THEME_DARK : THEME_LIGHT);
+  });
 
   loginButton.addEventListener("click", openLoginModal);
   logoutButton.addEventListener("click", logout);
