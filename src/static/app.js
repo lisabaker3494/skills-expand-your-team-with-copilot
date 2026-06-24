@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
+  const SCHOOL_NAME = "Mergington High School";
 
   // Activity categories with corresponding colors
   const activityTypes = {
@@ -57,6 +58,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const activeDayFilter = document.querySelector(".day-filter.active");
     if (activeDayFilter) {
       currentDay = activeDayFilter.dataset.day;
+    }
+
+    // Initialize search from URL when an activity is shared
+    function initializeSearchFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const sharedActivity = params.get("activity");
+      if (sharedActivity) {
+        searchQuery = sharedActivity;
+        searchInput.value = sharedActivity;
+      }
     }
 
     // Initialize time filter
@@ -474,8 +485,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Build social sharing links for an activity
   function getSocialShareLinks(name, formattedSchedule) {
-    const activityUrl = `${window.location.origin}/static/index.html`;
-    const shareText = `Check out "${name}" at Mergington High School! ${formattedSchedule}`;
+    const shareUrl = new URL("/static/index.html", window.location.origin);
+    shareUrl.searchParams.set("activity", name);
+    const activityUrl = shareUrl.toString();
+    const shareText = `Check out "${name}" at ${SCHOOL_NAME}! ${formattedSchedule}`;
     const encodedText = encodeURIComponent(shareText);
     const encodedUrl = encodeURIComponent(activityUrl);
 
@@ -889,5 +902,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize app
   checkAuthentication();
   initializeFilters();
+  initializeSearchFromUrl();
   fetchActivities();
 });
