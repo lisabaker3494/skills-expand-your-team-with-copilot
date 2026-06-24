@@ -32,6 +32,24 @@
   --info-light: #d1ecf1;
 }
 
+body.dark-mode {
+  --primary: #3949ab;
+  --primary-light: #5c6bc0;
+  --primary-dark: #283593;
+  --background: #111827;
+  --surface: #1f2937;
+  --text-primary: #f3f4f6;
+  --text-secondary: #d1d5db;
+  --border: #374151;
+  --border-light: #4b5563;
+  --border-focus: #93c5fd;
+  --success-light: #16311e;
+  --warning-light: #3d2d12;
+  --error-light: #411b1b;
+  --info-light: #173442;
+  color-scheme: dark;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -48,6 +66,7 @@ body {
   padding: 12px;
   background-color: var(--background);
   font-size: 0.9rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 header {
@@ -85,6 +104,7 @@ section {
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 100%;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 section h3 {
@@ -107,6 +127,7 @@ section h3 {
   background-color: var(--surface);
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .sidebar-filters h3 {
@@ -156,11 +177,11 @@ section h3 {
   display: flex;
   flex-direction: column;
   height: 100%;
-  transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   position: relative;
   overflow: hidden;
   font-size: 0.85rem;
+  transition: all 0.3s ease;
 }
 
 .activity-card:hover {
@@ -356,6 +377,7 @@ button {
   height: 180px;
   position: relative;
   overflow: hidden;
+  transition: background-color 0.2s ease;
 }
 
 .skeleton-line {
@@ -426,6 +448,7 @@ button {
   transition: transform 0.3s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   border: 1px solid var(--border);
+  color: var(--text-primary);
 }
 
 .modal.show .modal-content {
@@ -492,6 +515,8 @@ footer {
   border-radius: 20px 0 0 20px;
   font-size: 0.85rem;
   transition: all 0.3s ease;
+  background-color: var(--surface);
+  color: var(--text-primary);
 }
 
 .search-box input:focus {
@@ -617,6 +642,9 @@ footer {
   position: absolute;
   top: 10px;
   right: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 #user-status {
@@ -648,6 +676,14 @@ footer {
 
 .icon-button:hover {
   background-color: rgba(255, 255, 255, 0.3);
+}
+
+#theme-toggle {
+  white-space: nowrap;
+}
+
+.theme-icon {
+  font-size: 1rem;
 }
 
 .user-icon {
