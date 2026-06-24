@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
+  // Update this text if the school name changes.
+  const SCHOOL_NAME = "Mergington High School";
 
   // Activity categories with corresponding colors
   const activityTypes = {
@@ -111,6 +113,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const activeTimeFilter = document.querySelector(".time-filter.active");
     if (activeTimeFilter) {
       currentTimeRange = activeTimeFilter.dataset.time;
+    }
+  }
+
+  // Initialize search from URL when an activity is shared
+  function initializeSearchFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const sharedActivity = params.get("activity");
+    if (sharedActivity) {
+      searchQuery = sharedActivity;
+      searchInput.value = sharedActivity;
     }
   }
 
@@ -559,6 +571,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Build social sharing links for an activity
+  function getSocialShareLinks(name) {
+    const shareUrl = new URL(window.location.href);
+    shareUrl.hash = "";
+    shareUrl.searchParams.set("activity", name);
+    const activityUrl = shareUrl.toString();
+    const shareText = `Check out "${name}" at ${SCHOOL_NAME}!`;
+    const encodedText = encodeURIComponent(shareText);
+    const encodedUrl = encodeURIComponent(activityUrl);
+
+    return {
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+      x: `https://x.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+      whatsapp: `https://wa.me/?text=${encodedText}%20${encodedUrl}`,
+      email: `mailto:?subject=${encodeURIComponent(
+        `Join me at ${name}`
+      )}&body=${encodedText}%0A%0A${encodedUrl}`,
+    };
+  }
+
   // Function to render a single activity card
   function renderActivityCard(name, details) {
     const activityCard = document.createElement("div");
@@ -585,6 +617,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Format the schedule using the new helper function
     const formattedSchedule = formatSchedule(details);
+    const socialShareLinks = getSocialShareLinks(name);
     const difficultyHtml = details.difficulty
       ? `<p><strong>Difficulty:</strong> ${escapeHtml(details.difficulty)}</p>`
       : "";
@@ -619,6 +652,13 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="tooltip-text">Regular meetings at this time throughout the semester</span>
       </p>
       ${capacityIndicator}
+      <div class="share-actions">
+        <span class="share-label">Share:</span>
+        <a class="share-button share-facebook" href="${socialShareLinks.facebook}" target="_blank" rel="noopener noreferrer" aria-label="Share ${name} on Facebook">Facebook</a>
+        <a class="share-button share-x" href="${socialShareLinks.x}" target="_blank" rel="noopener noreferrer" aria-label="Share ${name} on X">X</a>
+        <a class="share-button share-whatsapp" href="${socialShareLinks.whatsapp}" target="_blank" rel="noopener noreferrer" aria-label="Share ${name} on WhatsApp">WhatsApp</a>
+        <a class="share-button share-email" href="${socialShareLinks.email}" aria-label="Share ${name} by email">Email</a>
+      </div>
       <div class="participants-list">
         <h5>Current Participants:</h5>
         <ul>
@@ -967,5 +1007,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeTheme();
   checkAuthentication();
   initializeFilters();
+  initializeSearchFromUrl();
   fetchActivities();
 });
