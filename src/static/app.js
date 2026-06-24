@@ -437,6 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const activityDifficulty = (details.difficulty || "").toLowerCase();
       if (currentDifficulty === "all") {
+        // "All" difficulty means show only activities open to all levels (no difficulty set)
         if (activityDifficulty) {
           return;
         }
