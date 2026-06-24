@@ -484,13 +484,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Build social sharing links for an activity
-  function getSocialShareLinks(name, formattedSchedule) {
+  function getSocialShareLinks(name) {
     const shareUrl = new URL(window.location.href);
-    shareUrl.search = "";
     shareUrl.hash = "";
     shareUrl.searchParams.set("activity", name);
     const activityUrl = shareUrl.toString();
-    const shareText = `Check out "${name}" at ${SCHOOL_NAME}! ${formattedSchedule}`;
+    const shareText = `Check out "${name}" at ${SCHOOL_NAME}!`;
     const encodedText = encodeURIComponent(shareText);
     const encodedUrl = encodeURIComponent(activityUrl);
 
@@ -530,7 +529,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Format the schedule using the new helper function
     const formattedSchedule = formatSchedule(details);
-    const socialShareLinks = getSocialShareLinks(name, formattedSchedule);
+    const socialShareLinks = getSocialShareLinks(name);
 
     // Create activity tag
     const tagHtml = `
