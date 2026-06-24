@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
+  // Update this text if the school name changes.
   const SCHOOL_NAME = "Mergington High School";
 
   // Activity categories with corresponding colors
