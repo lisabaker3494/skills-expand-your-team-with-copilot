@@ -495,7 +495,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return {
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-      x: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+      x: `https://x.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
       whatsapp: `https://wa.me/?text=${encodedText}%20${encodedUrl}`,
       email: `mailto:?subject=${encodeURIComponent(
         `Join me at ${name}`
