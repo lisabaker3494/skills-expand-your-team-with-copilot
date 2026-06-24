@@ -289,12 +289,22 @@ section h3 {
   opacity: 0.85;
 }
 
+.share-button:focus {
+  outline: 2px solid var(--primary-light);
+  outline-offset: 2px;
+  opacity: 0.9;
+}
+
 .share-facebook {
   background-color: #1877f2;
 }
 
 .share-x {
   background-color: #111111;
+}
+
+.share-linkedin {
+  background-color: #0a66c2;
 }
 
 .share-whatsapp {

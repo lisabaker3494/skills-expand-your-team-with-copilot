@@ -584,6 +584,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return {
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
       x: `https://x.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
       whatsapp: `https://wa.me/?text=${encodedText}%20${encodedUrl}`,
       email: `mailto:?subject=${encodeURIComponent(
         `Join me at ${name}`
@@ -656,6 +657,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="share-label">Share:</span>
         <a class="share-button share-facebook" href="${socialShareLinks.facebook}" target="_blank" rel="noopener noreferrer" aria-label="Share ${name} on Facebook">Facebook</a>
         <a class="share-button share-x" href="${socialShareLinks.x}" target="_blank" rel="noopener noreferrer" aria-label="Share ${name} on X">X</a>
+        <a class="share-button share-linkedin" href="${socialShareLinks.linkedin}" target="_blank" rel="noopener noreferrer" aria-label="Share ${name} on LinkedIn">LinkedIn</a>
         <a class="share-button share-whatsapp" href="${socialShareLinks.whatsapp}" target="_blank" rel="noopener noreferrer" aria-label="Share ${name} on WhatsApp">WhatsApp</a>
         <a class="share-button share-email" href="${socialShareLinks.email}" aria-label="Share ${name} by email">Email</a>
       </div>
