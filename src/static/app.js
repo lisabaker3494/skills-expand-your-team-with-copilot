@@ -46,17 +46,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Authentication state
   let currentUser = null;
-  const themes = {
-    dark: "dark",
-    light: "light",
-  };
+  const THEME_DARK = "dark";
+  const THEME_LIGHT = "light";
 
   function setTheme(theme) {
     if (!themeToggle || !themeIcon || !themeLabel) {
       return;
     }
 
-    const isDarkMode = theme === themes.dark;
+    const isDarkMode = theme === THEME_DARK;
 
     document.body.classList.toggle("dark-mode", isDarkMode);
     themeToggle.setAttribute("aria-pressed", isDarkMode ? "true" : "false");
@@ -68,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function initializeTheme() {
     const savedTheme = localStorage.getItem("themePreference");
 
-    if (savedTheme === themes.dark || savedTheme === themes.light) {
+    if (savedTheme === THEME_DARK || savedTheme === THEME_LIGHT) {
       setTheme(savedTheme);
       return;
     }
@@ -76,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prefersDarkMode = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
-    setTheme(prefersDarkMode ? themes.dark : themes.light);
+    setTheme(prefersDarkMode ? THEME_DARK : THEME_LIGHT);
   }
 
   // Time range mappings for the dropdown
@@ -273,8 +271,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (themeToggle) {
     themeToggle.addEventListener("click", () => {
       const nextTheme = document.body.classList.contains("dark-mode")
-        ? themes.light
-        : themes.dark;
+        ? THEME_LIGHT
+        : THEME_DARK;
       setTheme(nextTheme);
     });
   }
