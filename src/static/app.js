@@ -60,20 +60,20 @@ document.addEventListener("DOMContentLoaded", () => {
       currentDay = activeDayFilter.dataset.day;
     }
 
-    // Initialize search from URL when an activity is shared
-    function initializeSearchFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      const sharedActivity = params.get("activity");
-      if (sharedActivity) {
-        searchQuery = sharedActivity;
-        searchInput.value = sharedActivity;
-      }
-    }
-
     // Initialize time filter
     const activeTimeFilter = document.querySelector(".time-filter.active");
     if (activeTimeFilter) {
       currentTimeRange = activeTimeFilter.dataset.time;
+    }
+  }
+
+  // Initialize search from URL when an activity is shared
+  function initializeSearchFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const sharedActivity = params.get("activity");
+    if (sharedActivity) {
+      searchQuery = sharedActivity;
+      searchInput.value = sharedActivity;
     }
   }
 
@@ -485,7 +485,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Build social sharing links for an activity
   function getSocialShareLinks(name, formattedSchedule) {
-    const shareUrl = new URL("/static/index.html", window.location.origin);
+    const shareUrl = new URL(window.location.href);
+    shareUrl.search = "";
+    shareUrl.hash = "";
     shareUrl.searchParams.set("activity", name);
     const activityUrl = shareUrl.toString();
     const shareText = `Check out "${name}" at ${SCHOOL_NAME}! ${formattedSchedule}`;
