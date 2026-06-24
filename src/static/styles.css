@@ -238,6 +238,52 @@ section h3 {
   background-color: var(--success);
 }
 
+.share-actions {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.share-label {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.share-button {
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  color: white;
+  transition: opacity 0.2s ease;
+}
+
+.share-button:hover {
+  opacity: 0.85;
+}
+
+.share-facebook {
+  background-color: #1877f2;
+}
+
+.share-x {
+  background-color: #111111;
+}
+
+.share-whatsapp {
+  background-color: #25d366;
+}
+
+.share-email {
+  background-color: var(--primary);
+}
+
 /* Participants list */
 .participants-list {
   margin-top: 8px;
