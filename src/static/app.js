@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const activityInput = document.getElementById("activity");
   const closeRegistrationModal = document.querySelector(".close-modal");
   const themeToggle = document.getElementById("theme-toggle");
-  const themeIcon = themeToggle.querySelector(".theme-icon");
-  const themeLabel = themeToggle.querySelector(".theme-label");
+  const themeIcon = themeToggle?.querySelector(".theme-icon");
+  const themeLabel = themeToggle?.querySelector(".theme-label");
 
   // Search and filter elements
   const searchInput = document.getElementById("activity-search");
@@ -46,9 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Authentication state
   let currentUser = null;
+  const themes = {
+    dark: "dark",
+    light: "light",
+  };
 
   function setTheme(theme) {
-    const isDarkMode = theme === "dark";
+    if (!themeToggle || !themeIcon || !themeLabel) {
+      return;
+    }
+
+    const isDarkMode = theme === themes.dark;
 
     document.body.classList.toggle("dark-mode", isDarkMode);
     themeToggle.setAttribute("aria-pressed", isDarkMode ? "true" : "false");
@@ -60,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function initializeTheme() {
     const savedTheme = localStorage.getItem("themePreference");
 
-    if (savedTheme === "dark" || savedTheme === "light") {
+    if (savedTheme === themes.dark || savedTheme === themes.light) {
       setTheme(savedTheme);
       return;
     }
@@ -68,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prefersDarkMode = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
-    setTheme(prefersDarkMode ? "dark" : "light");
+    setTheme(prefersDarkMode ? themes.dark : themes.light);
   }
 
   // Time range mappings for the dropdown
@@ -262,12 +270,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Event listeners for authentication
-  themeToggle.addEventListener("click", () => {
-    const nextTheme = document.body.classList.contains("dark-mode")
-      ? "light"
-      : "dark";
-    setTheme(nextTheme);
-  });
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const nextTheme = document.body.classList.contains("dark-mode")
+        ? themes.light
+        : themes.dark;
+      setTheme(nextTheme);
+    });
+  }
 
   loginButton.addEventListener("click", openLoginModal);
   logoutButton.addEventListener("click", logout);
